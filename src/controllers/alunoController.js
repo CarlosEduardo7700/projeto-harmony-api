@@ -1,4 +1,5 @@
 import { aluno } from "../models/Aluno.js"
+import { instrutor } from "../models/Instrutor.js"
 
 class AlunoController {
 
@@ -26,7 +27,9 @@ class AlunoController {
 
     static async cadastrarAluno(req, res) {
         try {
-            const alunoCriado = await aluno.create(req.body)
+            const instrutorEncontrado = await instrutor.findById(req.body.instrutor)
+            const novoAluno = { ...req.body, instrutor: { ...instrutorEncontrado } }
+            const alunoCriado = await aluno.create(novoAluno)
             res.status(201).json({
                 message: "Aluno cadastrado com sucesso!",
                 aluno: alunoCriado
