@@ -1,6 +1,7 @@
 import express from "express";
 import iniciarConexao from "./config/databaseConnect.js";
 import routes from "./routes/index.js";
+import errorHandler from "./middleware/errorHandler.js";
 
 const conexao = await iniciarConexao();
 
@@ -14,5 +15,7 @@ conexao.once("open", () => {
 
 const app = express();
 routes(app);
+
+app.use(errorHandler);
 
 export default app;

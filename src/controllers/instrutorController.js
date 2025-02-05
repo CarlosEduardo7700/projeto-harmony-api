@@ -13,14 +13,12 @@ class InstrutorController {
         }
     }
 
-    static async encontrarInstrutorPorId(req, res) {
+    static async encontrarInstrutorPorId(req, res, next) {
         try {
             const instrutorEncontrado = await instrutor.findById(req.params.id);
             res.status(200).json(instrutorEncontrado);
         } catch (error) {
-            res.status(500).json({
-                message: `Erro na busca: ${error}`
-            });
+            next(error);
         }
     }
 
