@@ -11,8 +11,8 @@ const alunoSchema = new mongoose.Schema({
     observacoes: { type: String },
     instrutor: instrutorSchema,
     status: { type: String, required: true }
-}, {versionKey: false})
+}, {versionKey: false});
 
-const aluno = mongoose.model("alunos", alunoSchema)
+const aluno = mongoose.model("alunos", alunoSchema);
 
-export { aluno, alunoSchema }
+export { aluno, alunoSchema };

@@ -8,8 +8,8 @@ const instrutorSchema = new mongoose.Schema({
     senha: { type: String, required: true },
     instrumento: { type: String, required: true },
     status: { type: String, required: true }
-}, {versionKey: false})
+}, {versionKey: false});
 
-const instrutor = mongoose.model("instrutores", instrutorSchema)
+const instrutor = mongoose.model("instrutores", instrutorSchema);
 
-export { instrutor, instrutorSchema }
+export { instrutor, instrutorSchema };
