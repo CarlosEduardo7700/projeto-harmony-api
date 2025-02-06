@@ -1,3 +1,4 @@
+import NotFoundError from "../errors/NotFoundError.js";
 import { instrutor } from "../models/Instrutor.js";
 
 class InstrutorController {
@@ -16,7 +17,13 @@ class InstrutorController {
     static async encontrarInstrutorPorId(req, res, next) {
         try {
             const instrutorEncontrado = await instrutor.findById(req.params.id);
-            res.status(200).json(instrutorEncontrado);
+
+            if (instrutorEncontrado !== null) {
+                res.status(200).json(instrutorEncontrado);
+            } else {
+                next(new NotFoundError(`Instrutor de ID ${req.params.id} não encontrado!`));
+            }
+
         } catch (error) {
             next(error);
         }
