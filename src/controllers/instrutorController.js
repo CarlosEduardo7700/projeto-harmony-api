@@ -29,7 +29,7 @@ class InstrutorController {
         }
     }
 
-    static async cadastrarInstrutor(req, res) {
+    static async cadastrarInstrutor(req, res, next) {
         try {
             const instrutorCriado = await instrutor.create(req.body);
             res.status(201).json({
@@ -37,9 +37,7 @@ class InstrutorController {
                 instrutor: instrutorCriado
             });
         } catch (error) {
-            res.status(500).json({
-                message: `Erro ao cadastrar: ${error}`
-            });
+            next(error);
         }
     }
 
