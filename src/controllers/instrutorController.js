@@ -67,16 +67,42 @@ class InstrutorController {
         }
     }
 
-    static async encontrarInstrutorPorInstrumento(req, res) {
+    static async buscarComFiltro(req, res, next) {
         try {
-            const instrutorEncontrado = await instrutor.find({ instrumento: req.query.instrumento });
-            res.status(200).json(instrutorEncontrado);
+
+            const queryDeBusca = await gerarQueryDeBusca(req.query);
+
+            const instrutorEncontrado = await instrutor.find(queryDeBusca);
+
+            if (instrutorEncontrado.length !== 0) {
+                res.status(200).json(instrutorEncontrado);
+            } else {
+                next(new NotFoundError("Instrutores não encontrados!"));
+            }
+
         } catch (error) {
-            res.status(500).json({
-                message: `Erro na busca: ${error}`
-            });
+            next(error);
         }
     }
+
+}
+
+function gerarQueryDeBusca(parametros) {
+    const { instrumento, status } = parametros;
+
+    let busca = {};
+
+    if (instrumento) busca.instrumento = { 
+        $regex: instrumento, 
+        $options: "i" 
+    };
+
+    if (status) busca.status = { 
+        $regex: status, 
+        $options: "i" 
+    };
+
+    return busca;
 
 }
 

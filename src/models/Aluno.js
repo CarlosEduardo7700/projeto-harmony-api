@@ -23,7 +23,7 @@ const alunoSchema = new mongoose.Schema({
         type: String, 
         required: [true, "O campo 'faseAtual' é obrigatório"],
         enum: {
-            values: ["Iniciando", "Ensaio GEM", "Ensaio", "RDJ", "Oficial"],
+            values: ["Iniciante", "Intermediário", "Avançado"],
             message: "O valor {VALUE} não é uma fase válida"
         } 
     },
