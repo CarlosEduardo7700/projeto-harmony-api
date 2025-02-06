@@ -25,7 +25,7 @@ class AlunoController {
         }
     }
 
-    static async cadastrarAluno(req, res) {
+    static async cadastrarAluno(req, res, next) {
         try {
             const instrutorEncontrado = await instrutor.findById(req.body.instrutor);
             const novoAluno = { ...req.body, instrutor: { ...instrutorEncontrado } };
@@ -35,9 +35,7 @@ class AlunoController {
                 aluno: alunoCriado
             });
         } catch (error) {
-            res.status(500).json({
-                message: `Erro ao cadastrar: ${error}`
-            });
+            next(error);
         }
     }
 
