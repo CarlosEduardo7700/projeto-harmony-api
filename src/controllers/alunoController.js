@@ -1,5 +1,4 @@
-import { aluno } from "../models/Aluno.js";
-import { instrutor } from "../models/Instrutor.js";
+import { aluno, instrutor } from "../models/index.js";
 
 class AlunoController {
 
