@@ -3,14 +3,17 @@ import { instrutor } from "../models/Instrutor.js";
 
 class InstrutorController {
 
-    static async listarInstrutor(req, res) {
+    static async listarInstrutor(req, res, next) {
         try {
-            const listaDeInstrutores = await instrutor.find({});
-            res.status(200).json(listaDeInstrutores);
+
+            const queryDeBusca = instrutor.find();
+
+            req.resultado = queryDeBusca;
+
+            next();
+
         } catch (error) {
-            res.status(500).json({
-                message: `Erro na listagem: ${error}`
-            });
+            next(error);
         }
     }
 
@@ -72,10 +75,13 @@ class InstrutorController {
 
             const queryDeBusca = await gerarQueryDeBusca(req.query);
 
-            const instrutorEncontrado = await instrutor.find(queryDeBusca);
+            if (queryDeBusca !== null) {
 
-            if (instrutorEncontrado.length !== 0) {
-                res.status(200).json(instrutorEncontrado);
+                const instrutorEncontrado = instrutor.find(queryDeBusca);
+
+                req.resultado = instrutorEncontrado;
+
+                next();
             } else {
                 next(new NotFoundError("Instrutores não encontrados!"));
             }
